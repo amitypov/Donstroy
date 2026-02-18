@@ -1,4 +1,12 @@
 plugin: netbox.netbox.nb_inventory
-validate_certs: False 
+validate_certs: False
+group_by:
+  - device_roles
+  - sites
+  - manufacturers
+  - platforms
+  - tags
+interfaces: True
+config_context: True
 compose:
   ansible_host: primary_ip4.address
