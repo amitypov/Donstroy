@@ -1,0 +1,53 @@
+---
+- name: "Создание пользователя awx на Maipu"
+  hosts: manufacturers_maipu
+  gather_facts: false
+  connection: ansible.netcommon.network_cli
+  vars:
+    ansible_network_os: community.network.maipu
+    ansible_become: yes
+    ansible_become_method: enable
+    new_username: awx
+    new_password: "Ghjrhecn22"
+    # Команды для обычных Maipu (не WNC6600-100-AC(V1))
+    maipu_regular_commands:
+      - conf t
+      - local-user {{ new_username }} class manager
+      - service-type telnet console ssh ftp web netconf
+      - privilege 15
+      - password 0 {{ new_password }}
+      - end
+      - write memory
+    # Команды для модели WNC6600
+    maipu_wnc6600_commands:
+      - conf t
+      - user {{ new_username }} privilege 15 password 0 {{ new_password }}
+      - end
+      - write memory
+
+  tasks:
+    - name: "Определить модель устройства"
+      ansible.builtin.set_fact:
+        device_model: "{{ device_type.model | default('unknown') }}"
+
+    - name: "Сообщить модель"
+      ansible.builtin.debug:
+        msg: "Устройство {{ inventory_hostname }} имеет модель {{ device_model }}"
+
+    - name: "Применить команды для switches/routers Maipu"
+      community.network.maipu_command:
+        commands: "{{ maipu_regular_commands }}"
+      when: device_model != "WNC6600-100-AC(V1)"
+      register: result_regular
+      ignore_errors: yes
+
+    - name: "Применить команды для WNC6600"
+      community.network.maipu_command:
+        commands: "{{ maipu_wnc6600_commands }}"
+      when: device_model == "WNC6600-100-AC(V1)"
+      register: result_wnc
+      ignore_errors: yes
+
+    - name: "Вывод результата"
+      ansible.builtin.debug:
+        var: (result_wnc if device_model == "WNC6600-100-AC(V1)" else result_regular).stdout_lines
