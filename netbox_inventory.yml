@@ -6,6 +6,7 @@ fetch_all: False
 group_by: 
  - device_roles
  - region
+ - manufacturers
 device_query_filters:
   - has_primary_ip: 'true'
   - status: 'active'
