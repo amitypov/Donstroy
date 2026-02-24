@@ -34,7 +34,7 @@
       ansible.builtin.debug:
         msg: "Устройство {{ inventory_hostname }} имеет модель {{ device_model }}"
 
-    - name: "Применить команды для коммутаторов и роутеров Maipu"
+    - name: "Применить команды для switches/routers Maipu"
       community.network.maipu_command:
         commands: "{{ maipu_regular_commands }}"
       when: device_model != "WNC6600-100-AC(V1)"
