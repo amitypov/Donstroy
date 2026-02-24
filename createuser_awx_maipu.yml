@@ -5,8 +5,8 @@
   connection: ansible.netcommon.network_cli
   vars:
     ansible_network_os: community.network.maipu
-    ansible_become: yes
-    ansible_become_method: enable
+    #ansible_become: yes
+    #ansible_become_method: enable
     new_username: awx
     new_password: "Ghjrhecn22"
     # Команды для обычных Maipu (не WNC6600-100-AC(V1))
@@ -34,7 +34,7 @@
       ansible.builtin.debug:
         msg: "Устройство {{ inventory_hostname }} имеет модель {{ device_model }}"
 
-    - name: "Применить команды для switches/routers Maipu"
+    - name: "Применить команды для коммутаторов и роутеров Maipu"
       community.network.maipu_command:
         commands: "{{ maipu_regular_commands }}"
       when: device_model != "WNC6600-100-AC(V1)"
