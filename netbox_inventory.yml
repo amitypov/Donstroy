@@ -11,6 +11,6 @@ device_query_filters:
   - has_primary_ip: 'true'
   - status: 'active'
 compose:
-  ansible_host: primary_ip.address
+  ansible_host: primary_ip.address | regex_replace('/.*','')
   device_model: device_type.model
   manufacturer_name: device_type.manufacturer.name
