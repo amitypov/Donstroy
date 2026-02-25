@@ -3,10 +3,14 @@ api_endpoint: http://89.175.77.31:8010/
 token: tb5kURbz34HD9iQaKvbJTlK0kaSvMBBxFWpCgI0A
 validate_certs: False
 fetch_all: False
-group_by: 
- - device_roles
- - region
- - manufacturers
+group_by:
+  - device_roles
+  - region
+  - manufacturers
 device_query_filters:
   - has_primary_ip: 'true'
   - status: 'active'
+compose:
+  ansible_host: primary_ip.address
+  device_model: device_type.model
+  manufacturer_name: device_type.manufacturer.name
