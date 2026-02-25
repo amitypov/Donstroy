@@ -9,12 +9,6 @@
     ansible_network_os: community.network.maipu
     new_username: awx
     new_password: Ghjrhecn22
-    ansible_connection_args:
-      ssh:
-        extra_args: >
-          -o HostKeyAlgorithms=+ssh-rsa
-          -o PubkeyAcceptedAlgorithms=+ssh-rsa
-          -o KexAlgorithms=+diffie-hellman-group14-sha1
     maipu_regular_commands:
       - conf t
       - local-user {{ new_username }} class manager
