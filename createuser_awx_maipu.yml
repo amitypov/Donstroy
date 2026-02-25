@@ -7,9 +7,12 @@
 
   vars:
     ansible_network_os: community.network.maipu
-
     new_username: awx
     new_password: Ghjrhecn22
+    ansible_ssh_common_args: >
+      -o HostKeyAlgorithms=+ssh-rsa
+      -o PubkeyAcceptedAlgorithms=+ssh-rsa
+      -o KexAlgorithms=+diffie-hellman-group14-sha1
 
     maipu_regular_commands:
       - conf t
