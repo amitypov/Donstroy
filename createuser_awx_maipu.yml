@@ -7,6 +7,7 @@
 
   vars:
     ansible_network_os: community.network.maipu
+    ansible_network_cli_ssh_type: paramiko
     new_username: awx
     new_password: Ghjrhecn22
     maipu_regular_commands:
