@@ -3,27 +3,27 @@
   hosts: manufacturers_cisco
   gather_facts: false
   connection: network_cli
+  collections:
+    - cisco.ios
+    - ansible.netcommon
 
   vars:
-    ansible_network_os: community.network
+    ansible_network_os: cisco.ios
     ansible_network_cli_ssh_type: paramiko
     new_username: awx
     new_password: Ghjrhecn22
-    cisco_regular_commands:
-      - conf t
-      - username {{ new_username }} privilege 15 secret 0 {{ new_password }}
-      - end
 
   tasks:
     - name: Показать модель устройства (из NetBox)
       debug:
         msg: "Устройство {{ inventory_hostname }} модель {{ device_model | default('unknown') }}"
-    - name: Configure cisco
-      community.network_command:
-        commands: "{{ cisco_regular_commands }}"
+
+    - name: Configure Cisco user
+      ios_config:
+        lines:
+          - username {{ new_username }} privilege 15 secret 0 {{ new_password }}
       register: cisco_result
-    - name: Save config cisco
-      ansible.netcommon.cli_command:
-        command: write
-        prompt: "Yes|No"
-        answer: "yes"
+
+    - name: Save configuration
+      ios_config:
+        save_when: always
