@@ -1,7 +1,7 @@
 - name: создаем пользователя awx на cisco девайсах
   hosts: manufacturers_cisco
   gather_facts: no
-  connection: network_cli
+  connection: ansible.netcommon.network_cli
   vars:
     ansible_network_os: ios 
     new_username: awx
