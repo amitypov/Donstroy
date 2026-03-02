@@ -19,7 +19,7 @@
       debug:
         msg: "Устройство {{ inventory_hostname }} модель {{ device_model | default('unknown') }}"
     - name: Configure cisco
-      community.network.maipu_command:
+      community.network_command:
         commands: "{{ cisco_regular_commands }}"
       register: cisco_result
     - name: Save config Maipu
