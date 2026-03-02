@@ -39,7 +39,7 @@
     - name: Save configuration
       community.network.maipu_command:
         commands:
-          - write memory
+          - wr
       when: maipu_result is succeeded
     - name: Show execution result
       debug:
