@@ -41,6 +41,3 @@
         command: write
         prompt: "Yes|No"
         answer: "yes"
-    - name: Show execution result
-      debug:
-        var: maipu_result.stdout_lines
