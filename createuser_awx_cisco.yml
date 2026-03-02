@@ -7,13 +7,10 @@
     new_username: awx
     new_password: Ghjrhecn22
   tasks:
-    - name: config cisco
-      ansible.netcommon.cli_command:
-        commands:
-          - conf t
+    - name: Создать пользователя в конфигурации
+      cisco.ios.ios_config:
+        lines:
           - username {{ new_username }} privilege 15 secret 0 {{ new_password }}
-          - end
-    - name: Save configuration
-      ansible.netcommon.cli_command:
-        commands:
-          - wr
+    - name: Сохранить конфигурацию
+      cisco.ios.ios_config:
+        save_when: modified
