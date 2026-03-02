@@ -3,7 +3,6 @@
   hosts: manufacturers_cisco
   gather_facts: false
   connection: ansible.netcommon.network_cli
-  serial: 10
 
   vars:
     ansible_network_os: cisco.ios
