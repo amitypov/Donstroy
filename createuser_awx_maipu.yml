@@ -36,11 +36,11 @@
         commands: "{{ maipu_wnc6600_commands }}"
       when: device_model | default('') == "WNC6600-100-AC(V1)"
       register: maipu_result
-    - name: Save configuration
-      community.network.maipu_command:
-        commands:
-          - wr
-      when: maipu_result is succeeded
+    - name: Save config Maipu
+      ansible.netcommon.cli_command:
+        command: write
+        prompt: "Yes|No"
+        answer: "yes"
     - name: Show execution result
       debug:
         var: maipu_result.stdout_lines
