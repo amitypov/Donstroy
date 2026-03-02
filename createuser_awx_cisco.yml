@@ -1,29 +1,28 @@
 ---
-- name: Создание пользователя awx на Cisco
+- name: Создание пользователя на Cisco IOS
   hosts: manufacturers_cisco
-  gather_facts: false
   connection: network_cli
+  gather_facts: false
+
   collections:
     - cisco.ios
-    - ansible.netcommon
 
   vars:
     ansible_network_os: cisco.ios
     ansible_network_cli_ssh_type: paramiko
     new_username: awx
     new_password: Ghjrhecn22
+    new_privilege: 15
 
   tasks:
-    - name: Показать модель устройства (из NetBox)
-      debug:
-        msg: "Устройство {{ inventory_hostname }} модель {{ device_model | default('unknown') }}"
+    - name: Create or update local user
+      cisco.ios.ios_user:
+        name: "{{ new_username }}"
+        privilege: "{{ new_privilege }}"
+        configured_password: "{{ new_password }}"
+        update_password: always
+        state: present
 
-    - name: Configure Cisco user
-      ios_config:
-        lines:
-          - username {{ new_username }} privilege 15 secret 0 {{ new_password }}
-      register: cisco_result
-
-    - name: Save configuration
-      ios_config:
+    - name: Save running config to startup
+      cisco.ios.ios_config:
         save_when: always
