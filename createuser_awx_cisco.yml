@@ -7,10 +7,10 @@
     new_username: awx
     new_password: Ghjrhecn22
   tasks:
-    - name: Создать пользователя в конфигурации
+    - name: Создать пользователя
       cisco.ios.ios_config:
-        lines:
+        commands:
           - username {{ new_username }} privilege 15 secret 0 {{ new_password }}
     - name: Сохранить конфигурацию
-      cisco.ios.ios_config:
-        save_when: modified
+      cisco.ios.ios_command:
+        commands: wr
