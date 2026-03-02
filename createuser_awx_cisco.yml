@@ -22,7 +22,7 @@
       community.network_command:
         commands: "{{ cisco_regular_commands }}"
       register: cisco_result
-    - name: Save config Maipu
+    - name: Save config cisco
       ansible.netcommon.cli_command:
         command: write
         prompt: "Yes|No"
