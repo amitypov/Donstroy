@@ -14,8 +14,4 @@
       cisco.ios.ios_config:
         commands:
           - username {{ new_username }} privilege 15 secret 0 {{ new_password }}
-    
-    - name: Сохранить конфигурацию
-      cisco.ios.ios_command:
-        commands: 
           - wr
