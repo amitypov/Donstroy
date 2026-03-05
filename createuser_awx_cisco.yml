@@ -7,12 +7,15 @@
     ansible_network_os: ios 
     new_username: awx
     new_password: Ghjrhecn22
-    ansible_ssh_common_args: "-o KexAlgorithms=+diffie-hellman-group1-sha1 -o HostKeyAlgorithms=+ssh-rsa -o StrictHostKeyChecking=no
+    ansible_ssh_common_args: "-o KexAlgorithms=+diffie-hellman-group1-sha1 -o HostKeyAlgorithms=+ssh-rsa -o StrictHostKeyChecking=no"
+  
   tasks:
     - name: Создать пользователя
       cisco.ios.ios_config:
         commands:
           - username {{ new_username }} privilege 15 secret 0 {{ new_password }}
+    
     - name: Сохранить конфигурацию
       cisco.ios.ios_command:
-        commands: wr
+        commands: 
+          - wr
