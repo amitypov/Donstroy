@@ -16,4 +16,4 @@
       cisco.ios.ios_config:
         commands:
           - username {{ new_username }} privilege 15 secret 0 {{ new_password }}
-          save_when: changed
+        save_when: changed
